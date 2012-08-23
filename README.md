@@ -40,7 +40,9 @@ You will be asked for your master password then the password will be generated f
 ## Background
 
 The theft of passwords from internet sites seems to be an [increasingly](http://press.linkedin.com/node/1212) [common](http://ycorpblog.com/2012/07/13/yahoo-0713201/) [occurance](http://us.blizzard.com/en-us/securityupdate.html). Combined with the common practice of using either the same or related passwords across this is a serious risk to millions of people.
+
 Clearly you need a unique and strong password for every site you visit. I recently took Dan Boneh's excellent Cryptography class on [Coursera](https://www.coursera.org/course/crypto) and learned that this is a well known problem, password based key derivation, with standard solutions.
+
 Inspired by a [broken idea](http://news.ycombinator.com/item?id=4373909) on Hacker News and ignoring warnings to never even think about building your own crypto I made dpass.
 
 ## Other Password Managers
