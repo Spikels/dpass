@@ -49,7 +49,7 @@ Inspired by a [broken idea](http://news.ycombinator.com/item?id=4373909) on Hack
 
 ## References
 
-Dan Boneh - Key Derivation Lecture - http://www.youtube.com/watch?v=ZorKf6IaP0Q
-PKCS #5 RFC - http://tools.ietf.org/html/rfc2898
-PBKDF2 Test Vectors RFC - http://tools.ietf.org/html/rfc6070
-OpenSSL Gem PKCS5 - http://www.ruby-doc.org/stdlib-2.0/libdoc/openssl/rdoc/OpenSSL/PKCS5.html
+* Dan Boneh - Key Derivation Lecture - http://www.youtube.com/watch?v=ZorKf6IaP0Q
+* PKCS #5 RFC - http://tools.ietf.org/html/rfc2898
+* PBKDF2 Test Vectors RFC - http://tools.ietf.org/html/rfc6070
+* OpenSSL Gem PKCS5 - http://www.ruby-doc.org/stdlib-2.0/libdoc/openssl/rdoc/OpenSSL/PKCS5.html
