@@ -11,13 +11,19 @@ TEST_VECTORS = [
 ]
 
 describe Dpass do
-  describe "RFC 6070 test vectors" do
+  describe "Verify RFC 6070 test vectors" do
     i = 0
     TEST_VECTORS.each do |data|
       i += 1
-      it "matches test vestor #{i}" do
+      it "matches test vector #{i}" do
         Dpass.derive_raw_hex(data[0],data[1],data[2],data[3]).should eq(data[4])
       end
+    end
+  end
+
+  describe "Generate new salt hex string" do
+    it "should be non-nil" do
+      Dpass.generate_salt.length.should eq(32)
     end
   end
 end
