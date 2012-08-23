@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/Spikels/dpass"
 
   gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   = ['dpass']
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "dpass"
   gem.require_paths = ["lib"]

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'dpass'
+
+puts Dpass.derive_raw_hex('password','salt',1,20)
