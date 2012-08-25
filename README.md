@@ -1,7 +1,7 @@
 # WARNING!!! DO NOT USE! NEITHER COMPLETE OR WELL-TESTED!
 Please check back soon a usable version...
 
-# Dpass [![Build Status](https://secure.travis-ci.org/spikels/dpass.png)](http://travis-ci.org/spikels/dpass)
+# Dpass [![Build Status](https://secure.travis-ci.org/Spikels/dpass.png)](http://travis-ci.org/Spikels/dpass)
 
 Application specific passwords derived from your secret master password using [PBKDF2](http://en.wikipedia.org/wiki/PBKDF2) from OpenSSL already installed on your computer.
 
