@@ -1,4 +1,20 @@
 #!/usr/bin/env ruby
 require 'dpass'
+require 'trollop'
 
-puts Dpass.derive_raw_hex('password','salt',1,20)
+opts = Trollop::options do
+  version Dpass::VERSION
+  banner <<-EOS
+dpass derives application specific passwords from your master password
+Usage: dpass [options] <app_name> [<app_name_2>...<app_name_N>]
+where [options] are:
+EOS
+  opt :new_salt, "Generate new salt file (~/.dpass)"
+end
+
+if opts[:new_salt]
+  Dpass.new_salt
+else
+  Trollop::die "must supply at least one app_name" if ARGV.length == 0
+  Dpass.derive
+end

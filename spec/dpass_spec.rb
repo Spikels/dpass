@@ -21,9 +21,35 @@ describe Dpass do
     end
   end
 
-  describe "Generate new salt hex string" do
-    it "should be non-nil" do
-      Dpass.generate_salt.length.should eq(32)
+  describe "Reading salt file" do
+    it "should raise error if file does not exist" do
+      File.stub!(:exists?).and_return(false)
+      expect{Dpass.read_salt}.to raise_error(StandardError)
+    end
+    it "should have correct length" do
+      # This only works with actual salt file
+      #  but can't figure out how to stub this
+      Dpass.read_salt.length.should eq(32)
+    end
+    it "should contain only hexidecimal characters" do
+      # This only works with actual salt file
+      #  but can't figure out how to stub this
+      Dpass.read_salt.gsub(/[0-9a-f]/,'').length.should eq(0)
+    end
+  end
+
+  describe "Generating new salt file" do
+    describe "generate a random salt string" do
+      it "should be non-nil" do
+        Dpass.generate_salt.length.should eq(32)
+      end
+      it "should contain only hexidecimal characters" do
+        Dpass.generate_salt.gsub(/[0-9a-f]/,'').length.should eq(0)
+      end
+    end
+    it "should not change an existing salt file" do
+      File.stub!(:exists?).and_return(true)
+      expect{Dpass.new_salt}.to raise_error(StandardError)
     end
   end
 end

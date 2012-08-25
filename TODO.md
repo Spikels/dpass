@@ -1,5 +1,8 @@
 # TODO
 
+* Tests
+  * Add tests to new code & test frist going forward!
+
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
 
