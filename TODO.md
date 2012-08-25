@@ -1,8 +1,9 @@
 # TODO
 
 * Tests
+  * DONE-Add Travis CI
+  * Figure out how to mock the 2 file system tests
   * Add tests to new code & test frist going forward!
-  * Add Travis CI
 
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
