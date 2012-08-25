@@ -15,7 +15,7 @@ You need a personal dpass salt file in your home directory (~/.dpass). The SAME 
 
 If this is the first time you are using dpass, go ahead and create a new personal salt file:
 
-    $ dpass -new-salt
+    $ dpass -new_salt
 
 ## Usage
 
