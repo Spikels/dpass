@@ -41,9 +41,10 @@ module Dpass
   def self.derive
     salt = read_salt()
     # TODO-Check: HASH_ITER, PASS_LENGTH, SYMBOL_COUNT, SYMBOLS.length
-    #master_pass = get_password()
     master_pass = get_password_masked()
-    # TODO-Check: master_pass (min length)
+    if master_pass.length < WARN_MASTER_PASS_LENGTH
+        puts "WARNING: Your master password should be at least #{WARN_MASTER_PASS_LENGTH} characters long."
+    end
     ARGV.each do |arg|
       bytes = Dpass.derive_raw_hex(master_pass,
                            salt+arg,
@@ -65,11 +66,8 @@ module Dpass
   end
 
   def self.read_salt
-    if File.exists?(SALT)
-      File.open(SALT, 'rb') {|f| f.read.strip}
-    else
-      raise StandardError, "ERROR: salt file (#{SALT}) does not exist. Use 'dpass salt' command to create a new one"
-    end
+    Dpass.verify_salt
+    File.open(SALT, 'rb') {|f| f.read.strip}
   end
 
   def self.new_salt
@@ -77,15 +75,27 @@ module Dpass
       raise StandardError, "ERROR: dpass salt file (#{SALT}) already exists. A NEW SALT FILE WILL BREAK ALL EXISTING DERIVED PASSWORDS! If you really want this, you must manually delete or move the existing salt file."
     else
       new_value = Dpass.generate_salt
-      puts "Generated new random salt: #{new_value}"
-      File.open(SALT, 'wb') {|f| f.write new_value + "\n"}
-      File.chmod(0600, SALT)
+      File.open(SALT, 'wb', 0600) {|f| f.write new_value + "\n"}
       # Verify salt file
-      if new_value != Dpass.read_salt
-        puts "ERROR: salt in file does not match new salt just create"
-      else
-        puts "Saved to #{SALT}, set permission and verfied"
-      end
+      Dpass.verify_salt(new_value)
+      puts "Generated new random salt: #{new_value}"
+      puts "Saved to #{SALT}, set permission (0600) and verfied"
     end
+  end
+
+  def self.verify_salt(expected_value = nil)
+    if !File.exists?(SALT)
+      raise StandardError, "ERROR: salt file (#{SALT}) does not exist. Use 'dpass salt' command to create a new one"
+    end
+    currrent_salt = File.open(SALT, 'rb')
+    if expected_value && expected_value != currrent_salt
+      raise StandardError, "ERROR: salt in file does not match new salt just create"
+    end
+    # WARNING: PERMISSION BITS ARE PROBABLY OS SPECIFIC...
+    if (mode = File.stat(SALT).mode) != 33152  # 100600 in octal
+      puts "WARNING: salt file (#{SALT}) permission not strict enough (#{sprintf("%o",mode)[2..-1]}). Use 'chmod 0600 ~/.dpass' limit access only to user."
+    end         
+    ### Check length
+    ### Check character set
   end
 end

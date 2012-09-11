@@ -7,6 +7,8 @@ Application specific passwords derived from your secret master password using [P
 
 ## Installation
 
+Dpass currently requires Ruby 1.9.x but should soon work for all versions.
+
 Install the gem:
 
     $ gem install dpass --pre

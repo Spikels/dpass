@@ -1,3 +1,3 @@
 module Dpass
-  VERSION = "0.0.1.alpha05"
+  VERSION = "0.0.1.alpha06"
 end

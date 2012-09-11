@@ -18,4 +18,6 @@ module Dpass
   PASS_LENGTH = 11 # Base 256 
   SALT_PATH = ENV['HOME']+'/.dpass'
   SALT_SIZE = 16 # in bytes - hex is double this
+  MIN_MASTER_PASS_LENGTH = 8
+  WARN_MASTER_PASS_LENGTH = 10
 end
