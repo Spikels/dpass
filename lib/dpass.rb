@@ -2,10 +2,32 @@ require 'dpass/version'
 require 'dpass/settings'
 require 'openssl'
 require 'securerandom'
+require 'clipboard'
 
 SALT = Dpass::SALT_PATH
 
 module Dpass
+
+  def self.derive
+    verify_settings()
+    salt = read_salt()
+    master_pass = get_password_masked()
+    ARGV.each do |app_name|
+      pass_bytes = Dpass.derive_raw_hex(master_pass,
+                           salt+app_name,
+                           Dpass::HASH_ITER,
+                           Dpass::PASS_LENGTH_BYTES)
+      pass_syms = Dpass.rebase_bytes(pass_bytes, Dpass::SYMBOL_COUNT)
+      pass = pass_syms.map {|c| Dpass::SYMBOLS[c]}.join
+      pass = pass[0..(PASS_LENGTH_SYMBOLS-1)]
+      puts "#{app_name}: #{pass}"
+      Clipboard.copy pass
+      delay_wipe_clipboard()
+    end
+    # Overwrite master password in memory with random bytes
+    master_pass.replace SecureRandom.random_bytes(master_pass.length)
+  end
+
   def self.rebase_bytes(hex_string, new_base)
     num = hex_string.to_i(16)
     result = []
@@ -35,26 +57,11 @@ module Dpass
       $stdout.sync = buffering
       puts
     end
-    return password.chomp
-  end
-
-  def self.derive
-    salt = read_salt()
-    # TODO-Check: HASH_ITER, PASS_LENGTH, SYMBOL_COUNT, SYMBOLS.length
-    master_pass = get_password_masked()
-    if master_pass.length < WARN_MASTER_PASS_LENGTH
+    password.chomp
+    if password.length < WARN_MASTER_PASS_LENGTH
         puts "WARNING: Your master password should be at least #{WARN_MASTER_PASS_LENGTH} characters long."
     end
-    ARGV.each do |arg|
-      bytes = Dpass.derive_raw_hex(master_pass,
-                           salt+arg,
-                           Dpass::HASH_ITER,
-                           Dpass::PASS_LENGTH)
-      syms = Dpass.rebase_bytes(bytes, Dpass::SYMBOL_COUNT)
-      pass = syms.map {|c| Dpass::SYMBOLS[c]}.join
-      puts "#{arg}: #{pass}"
-    end
-    master_pass.replace SecureRandom.random_bytes(master_pass.length)
+    return password
   end
 
   def self.derive_raw_hex(pass, salt, iter, keylen)
@@ -97,5 +104,17 @@ module Dpass
     end         
     ### Check length
     ### Check character set
+  end
+
+  def self.verify_settings
+    # TODO-Check: HASH_ITER, PASS_LENGTH, SYMBOL_COUNT, SYMBOLS.length
+  end
+
+  def self.delay_wipe_clipboard
+    job1 = fork do
+      sleep WIPE_CLIPBOARD_DELAY
+      Clipboard.clear
+    end
+    Process.detach(job1)
   end
 end

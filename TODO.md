@@ -3,9 +3,6 @@
 
 * General
   * Make work under Ruby 1.8.x (must be using 1.9 syntax)
-  * Copy password to clipboard (only for single passwords)
-  * Erase password from clipboard after X min
-  * Output password should always have same length
 
 
 * Tests
@@ -18,6 +15,8 @@
 
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
+  * Add --init command (test install, new-salt & print basic instructions)
+  * Add --test command (check ruby version, openssl, ...)
 
 
 * Create salt file (~/.dpass)
@@ -27,7 +26,7 @@
   * DONE-Set permission to 600
   * Handle File.open errors
   * Handle File.chown errors
-  * ???-Append new salts so old salts are not lost (w/ date?)
+  * ???-Append new salts so old salts are not lost (w/ create date?)
 
 
 * Validate salt file
@@ -46,7 +45,8 @@
   * DONE-Clear from memory ASAP string.replace
   * Allow delete/backspace when entering master password
 
-* Settings validation
+* Settings
+  * Remove calculated settings from setting.rb (put in dpass.rb)
   * Check HASH_ITER is reasonable before use
   * Check PASS_LENGTH is reasonable before use
   * Check SYMBOL_COUNT is reasonable before use
@@ -58,4 +58,7 @@
   * ???-Fail if master pass length < MIN_MASTER_PASS_LENGTH
 
 * Output password
+  * DONE-Fixed length (PASS_LENGTH_SYMBOLS) - gen too long then truncate
+  * DONE-Copy password to clipboard (only for single passwords)
+  * DONE-Erase password from clipboard after WIPE_CLIPBOARD_DELAY seconds
   * Guarantee specified bits of randomness (SYMBOL_COUNT, PASS_LENGTH)
