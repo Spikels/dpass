@@ -1,5 +1,5 @@
-# WARNING!!! DO NOT USE! NEITHER COMPLETE OR WELL-TESTED!
-Please check back soon a usable version...
+# WARNING!!! DO NOT USE! NOT COMPLETE OR TESTED!
+Please check back soon for the first usable version (i.e. v0.0.1).
 
 # Dpass [![Build Status](https://secure.travis-ci.org/Spikels/dpass.png)](http://travis-ci.org/Spikels/dpass)
 
@@ -7,7 +7,7 @@ Application specific passwords derived from your secret master password using [P
 
 ## Installation
 
-Dpass currently requires Ruby 1.9.x but should soon work for all versions.
+Dpass currently requires Ruby 1.9.x but should soon work on Ruby 1.8.x.
 
 Install the gem:
 

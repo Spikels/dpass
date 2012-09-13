@@ -2,10 +2,10 @@
 
 
 * General
-  * Make work under Ruby 1.8.x (must be using 1.9 syntax)
+  * Make work under Ruby 1.8.x (must be using some 1.9 syntax)
 
 
-* Tests
+* Testing
   * DONE-Add Travis CI
   * Figure out how to mock the 2 file system tests
   * Add tests to new code & test frist going forward!
@@ -15,8 +15,9 @@
 
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
-  * Add --init command (test install, new-salt & print basic instructions)
+  * Better ERROR messages & dont raise StandardError
   * Add --test command (check ruby version, openssl, ...)
+  * Add --init command (test install, new-salt & print basic instructions)
 
 
 * Create salt file (~/.dpass)
