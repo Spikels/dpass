@@ -12,6 +12,7 @@ module Dpass
     verify_settings()
     salt = read_salt()
     master_pass = get_password_masked()
+    pass = ""
     ARGV.each do |app_name|
       pass_bytes = Dpass.derive_raw_hex(master_pass,
                            salt+app_name,
@@ -21,10 +22,10 @@ module Dpass
       pass = pass_syms.map {|c| Dpass::SYMBOLS[c]}.join
       pass = pass[0..(PASS_LENGTH_SYMBOLS-1)]
       puts "#{app_name}: #{pass}"
-      Clipboard.copy pass
-      delay_wipe_clipboard()
     end
-    # Overwrite master password in memory with random bytes
+    save_to_clipboard(ARGV[-1], pass)
+    # Overwrite passwords in memory with random bytes
+    pass.replace SecureRandom.random_bytes(pass.length)
     master_pass.replace SecureRandom.random_bytes(master_pass.length)
   end
 
@@ -79,7 +80,7 @@ module Dpass
 
   def self.new_salt
     if File.exists?(SALT)
-      raise StandardError, "ERROR: dpass salt file (#{SALT}) already exists. A NEW SALT FILE WILL BREAK ALL EXISTING DERIVED PASSWORDS! If you really want this, you must manually delete or move the existing salt file."
+      puts "ERROR: dpass salt file (#{SALT}) already exists. A NEW SALT FILE WILL BREAK ALL EXISTING DERIVED PASSWORDS! If you really want this, you must manually delete or move the existing salt file."
     else
       new_value = Dpass.generate_salt
       File.open(SALT, 'wb', 0600) {|f| f.write new_value + "\n"}
@@ -90,13 +91,15 @@ module Dpass
     end
   end
 
-  def self.verify_salt(expected_value = nil)
+  def self.verify_salt(expected_value=nil)
     if !File.exists?(SALT)
-      raise StandardError, "ERROR: salt file (#{SALT}) does not exist. Use 'dpass salt' command to create a new one"
+      puts "ERROR: salt file (#{SALT}) does not exist. Use 'dpass salt' command to create a new one"
+      abort
     end
-    currrent_salt = File.open(SALT, 'rb')
+    currrent_salt = File.open(SALT, 'rb') {|f| f.read.strip}
     if expected_value && expected_value != currrent_salt
-      raise StandardError, "ERROR: salt in file does not match new salt just create"
+      puts "ERROR: salt in file does not match new salt just create"
+      abort
     end
     # WARNING: PERMISSION BITS ARE PROBABLY OS SPECIFIC...
     if (mode = File.stat(SALT).mode) != 33152  # 100600 in octal
@@ -107,14 +110,20 @@ module Dpass
   end
 
   def self.verify_settings
-    # TODO-Check: HASH_ITER, PASS_LENGTH, SYMBOL_COUNT, SYMBOLS.length
+    # TODO-Check: HASH_ITER
+    # TODO-Check: PASS_LENGTH
+    # TODO-Check: SYMBOL_COUNT
+    # TODO-Check: SYMBOLS.length
   end
 
-  def self.delay_wipe_clipboard
+  def self.save_to_clipboard(app_name, pass)
+    Clipboard.copy pass
+    # Clear clipboard after delay
     job1 = fork do
       sleep WIPE_CLIPBOARD_DELAY
       Clipboard.clear
     end
     Process.detach(job1)
+    puts "#{app_name} password copied to clipboard"
   end
 end
