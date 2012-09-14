@@ -22,10 +22,10 @@ describe Dpass do
   end
 
   describe "Reading salt file" do
-    it "should raise error if file does not exist" do
-      File.stub!(:exists?).and_return(false)
-      expect{Dpass.read_salt}.to raise_error(StandardError)
-    end
+#    it "should raise error if file does not exist" do
+#      File.stub!(:exists?).and_return(false)
+#      expect{Dpass.read_salt}.to raise_error(StandardError)
+#    end
 #   This only works with actual salt file. Need to figure out how to
 #    mock files...
 #    it "should have correct length" do
@@ -45,9 +45,9 @@ describe Dpass do
         Dpass.generate_salt.gsub(/[0-9a-f]/,'').length.should eq(0)
       end
     end
-    it "should not change an existing salt file" do
-      File.stub!(:exists?).and_return(true)
-      expect{Dpass.new_salt}.to raise_error(StandardError)
-    end
+#    it "should not change an existing salt file" do
+#      File.stub!(:exists?).and_return(true)
+#      expect{Dpass.new_salt}.to raise_error(StandardError)
+#    end
   end
 end
