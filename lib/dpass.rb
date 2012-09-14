@@ -110,6 +110,14 @@ module Dpass
     # TODO-Check: HASH_ITER, PASS_LENGTH, SYMBOL_COUNT, SYMBOLS.length
   end
 
+  def self.verify_environment
+    require 'mkmf'
+    pkg_config('openssl')
+    puts OpenSSL::OPENSSL_VERSION
+    sha256_avail = have_func('PKCS5_PBKDF2_HMAC')
+    sha1_avail = have_func('PKCS5_PBKDF2_HMAC_SHA1')
+  end
+
   def self.delay_wipe_clipboard
     job1 = fork do
       sleep WIPE_CLIPBOARD_DELAY

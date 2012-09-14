@@ -3,6 +3,8 @@
 
 * General
   * Make work under Ruby 1.8.x (must be using some 1.9 syntax)
+  * Website on Heroku to calc password & store salt
+  * Browser add-in to copy password into field
 
 
 * Testing
@@ -15,7 +17,8 @@
 
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
-  * Better ERROR messages & dont raise StandardError
+  * Better ERROR messages
+  * DONE-dont raise StandardError
   * Add --test command (check ruby version, openssl, ...)
   * Add --init command (test install, new-salt & print basic instructions)
 
