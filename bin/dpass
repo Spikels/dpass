@@ -10,10 +10,13 @@ Usage: dpass [options] <app_name> [<app_name_2>...<app_name_N>]
 where [options] are:
 EOS
   opt :new_salt, "Generate new salt file (~/.dpass)"
+  opt :info, "Information about settings and environment"
 end
 
 if opts[:new_salt]
   Dpass.new_salt
+elsif opts[:info]
+  Dpass.info
 else
   Trollop::die "must supply at least one app_name" if ARGV.length == 0
   Dpass.derive

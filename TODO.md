@@ -10,15 +10,15 @@
 * Testing
   * DONE-Add Travis CI
   * Figure out how to mock the 2 file system tests
-  * Add tests to new code & test frist going forward!
+  * *** Add tests to new code & test frist going forward! ***
   * Test under Ruby 1.8.x (Travis)
   * ??? - Test on Windows
 
 
 * Command-line
   * DONE-Allow multiple applications (i.e. dpass gmail yahoo)
-  * Better ERROR messages
-  * DONE-dont raise StandardError
+  * DONE-dont raise StandardErrors
+  * DONE(mostly)-Better ERROR messages
   * Add --test command (check ruby version, openssl, ...)
   * Add --init command (test install, new-salt & print basic instructions)
 
@@ -34,9 +34,9 @@
 
 
 * Validate salt file
-  * DONE - Warn if salt file permission is not 0600 (Is this OS specific?)
-  * Check salt is valid length
-  * Check salt is hex character set only
+  * DONE-Warn if salt file permission is not 0600 (Is this OS specific?)
+  * DONE-Check salt is valid length
+  * DONE-Check salt is hex character set only
   * ???-Check that salt seems random (how?)
 
 * Read salt file (~/.dpass)
@@ -47,10 +47,10 @@
 * Master password
   * DONE-Remove highline dependency
   * DONE-Clear from memory ASAP string.replace
-  * Allow delete/backspace when entering master password
+  * *** Allow delete/backspace when entering master password ***
 
 * Settings
-  * Remove calculated settings from setting.rb (put in dpass.rb)
+  * DONE-Remove calculated settings from setting.rb (put in dpass.rb)
   * Check HASH_ITER is reasonable before use
   * Check PASS_LENGTH is reasonable before use
   * Check SYMBOL_COUNT is reasonable before use
@@ -65,4 +65,5 @@
   * DONE-Fixed length (PASS_LENGTH_SYMBOLS) - gen too long then truncate
   * DONE-Copy password to clipboard (only for single passwords)
   * DONE-Erase password from clipboard after WIPE_CLIPBOARD_DELAY seconds
-  * Guarantee specified bits of randomness (SYMBOL_COUNT, PASS_LENGTH)
+  * DONE-Guarantee specified bits of randomness (SYMBOL_COUNT, PASS_LENGTH)
+  * ???-Only show password to screen if more than one or if special flag

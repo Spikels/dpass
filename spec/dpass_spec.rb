@@ -38,8 +38,8 @@ describe Dpass do
 
   describe "Generating new salt file" do
     describe "generate a random salt string" do
-      it "should be non-nil" do
-        Dpass.generate_salt.length.should eq(32)
+      it "should be consistent with length in settings.rb" do
+        Dpass.generate_salt.length.should eq(2 * Dpass::SALT_LENGTH_BYTES)
       end
       it "should contain only hexidecimal characters" do
         Dpass.generate_salt.gsub(/[0-9a-f]/,'').length.should eq(0)
